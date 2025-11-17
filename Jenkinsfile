@@ -1,33 +1,17 @@
 pipeline {
-    agent any
+ agent any
 
-    tools {
-        jdk 'OpenJDK-11'      // remplacer par le nom configuré dans Jenkins
-        maven 'Maven-3.8.8'   // remplacer par le nom configuré dans Jenkins
+  stages {
+    stage('GIT') {
+      steps {
+        git branch: 'main', url: 'https://github.com/Nada-Ben-Khaled/nada_benkhaled_4twin8.git'
+      }
     }
 
-    stages {
-        stage('Checkout') {
-            steps {
-                git branch: 'master', url: 'https://github.com/hwafa/timesheetproject.git'
-            }
-        }
-
-        stage('Compile') {
-            steps {
-                sh 'mvn -B clean compile'
-            }
-        }
-
-        stage('Test (optional)') {
-            steps {
-                sh 'mvn -B test'
-            }
-        }
+    stage('Compile Stage') {
+      steps {
+        sh 'mvn clean compile'
+      }
     }
-
-    post {
-        success { echo "Build SUCCESS" }
-        failure { echo "Build FAILURE" }
-    }
+  }
 }
